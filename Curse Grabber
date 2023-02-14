@@ -1,0 +1,36 @@
+--game:GetService("ReplicatedStorage").Effects.Parts.CurseOrb.InnerCurse.Prompt
+local SpawnRemote = game.ReplicatedStorage.Events:WaitForChild("Spawn")
+for i,child in pairs(game.Workspace:GetDescendants()) do
+    if child.Name == "Prompt" and child:FindFirstAncestor("CurseOrb") then
+        if SpawnRemote.ClassName == "RemoteFunction" then
+            SpawnRemote:InvokeServer()
+        elseif SpawnRemote.ClassName == "RemoteEvent" then -- for update compatability
+            SpawnRemote:FireServer()
+        end
+        wait(0.1)
+        repeat
+            if child ~= nil and game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = child.Parent.CFrame
+                fireproximityprompt(child)
+            end
+            wait()
+        until child == nil or not child:FindFirstAncestor("Workspace") -- god is dead this is proof I don't care I'm putting the repeat loop in here and no one can stop me
+    end
+end
+game.Workspace.DescendantAdded:Connect(function(child)
+    if child.Name == "Prompt" and child:FindFirstAncestor("CurseOrb") then
+        if SpawnRemote.ClassName == "RemoteFunction" then
+            SpawnRemote:InvokeServer()
+        elseif SpawnRemote.ClassName == "RemoteEvent" then -- for update compatability
+            SpawnRemote:FireServer()
+        end
+        wait(0.1)
+        repeat
+            if child ~= nil and game.Players.LocalPlayer.Character ~= nil and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = child.Parent.CFrame
+                fireproximityprompt(child)
+            end
+            wait()
+        until child == nil or not child:FindFirstAncestor("Workspace") -- god is dead this is proof I don't care I'm putting the repeat loop in here and no one can stop me
+    end
+end)
